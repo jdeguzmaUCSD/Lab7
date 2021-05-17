@@ -5,7 +5,7 @@ export const router = {};
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(newClassname, currentEntry, count, clicked) {
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +35,47 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+  // home menu
+  console.log(history.length);
+  if(newClassname == 'home') {
+    // clear entry page
+    document.querySelector('entry-page').remove();
+    let newPage = document.createElement('entry-page');
+    document.querySelector('body').insertBefore(newPage, document.querySelector('main'));
+  
+    document.querySelector('body').classList.remove('single-entry');
+    document.querySelector('body').classList.remove('settings');
+    document.querySelector('h1').innerHTML = 'Journal Entries';
+    let currentState = ['home', null, null];
+    if(clicked == true) {
+      history.pushState(currentState, newClassname, ' ');
+    }
+  } else if(newClassname == 'settings') {
+    // clear entry page
+    document.querySelector('entry-page').remove();
+    let newPage = document.createElement('entry-page');
+    document.querySelector('body').insertBefore(newPage, document.querySelector('main'));
+    // change class
+    document.querySelector('body').classList.remove('single-entry');
+    document.querySelector('body').classList.add('settings');
+    // change title
+    document.querySelector('h1').innerHTML = 'Settings';
+    let currentState = ['settings', null, null];
+    if(clicked == true) {
+      history.pushState(currentState, newClassname, '#settings');
+    }
+  } else if(newClassname == 'single-entry') { // journal
+    // change class
+    document.querySelector('body').classList.remove('settings');
+    document.querySelector('body').classList.add('single-entry');
+    // change title
+    document.querySelector('h1').innerHTML = 'Entry ' + count;
+
+    document.querySelector('entry-page').entry = currentEntry;
+    let currentState = ['single-entry', currentEntry, count];
+    if(clicked == true) {
+      history.pushState(currentState, newClassname, '#entry' + count);
+    }
+  }
+  
 }
