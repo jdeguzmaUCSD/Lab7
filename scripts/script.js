@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
     let currentState = ['home', null, null];
-    history.pushState(currentState, newClassname, ' ', false);
+    history.pushState(currentState, 'home', ' ', false);
   });
 
 document.querySelector('img').addEventListener('click', () => {
